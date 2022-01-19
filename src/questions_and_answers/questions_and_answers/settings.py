@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     'questions_and_answers.users',
     'questions_and_answers.questions',
+
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -115,6 +118,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = 'questions_list'
+
+LOGIN_URL = 'login'
+
+LOGOUT_URL = 'logout'
+
 AUTH_USER_MODEL = 'users.CustomUser'
 
 
@@ -127,3 +136,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
