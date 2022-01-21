@@ -8,5 +8,26 @@
         <p>{{ question.body }}</p>
         <h6>Posted by: <i>{{ question.author }}</i></h6>
         <p>Published {{ question.created_at }}</p>
+
+        <hr>
+    </div>
+
+    <div class="container">
+        {% for answer in answers %}
+            <div class="card mt-4 py-3 shadow">
+                <div class="card-body">
+                    <p class="card-text">{{ answer.description }}</p>
+                    <div class="row">
+                        <div class="col col-md-auto">
+                            Answered by: {{ answer.author.username }}
+                        </div>
+
+                        <div class="col col-md-auto">
+                            {{ answer.created_at }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

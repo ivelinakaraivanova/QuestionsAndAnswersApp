@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
+from questions_and_answers.questions.models import Question
+
 User = get_user_model()
 
 
@@ -26,3 +28,9 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
 
         return clean_data['password2']
+
+
+class QuestionRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ('title', 'body')
