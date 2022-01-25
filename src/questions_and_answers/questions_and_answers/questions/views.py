@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from questions_and_answers.questions.forms import UserRegistrationForm, QuestionRegistrationForm
+from questions_and_answers.questions.forms import UserRegistrationForm, QuestionRegistrationForm, AnswerForm, \
+    QuestionUpdateForm, AnswerUpdateForm
 from questions_and_answers.questions.models import Question, Answer
 
 
@@ -18,9 +19,21 @@ def question_details(request, slug):
     question = get_object_or_404(Question, slug=slug)
     answers = Answer.objects.filter(question=question)
 
+    if request.method == "POST":
+        answer_form = AnswerForm(request.POST)
+        if answer_form.is_valid():
+            answer = answer_form.save(commit=False)
+            answer.question = question
+            answer.author = request.user
+            answer = answer_form.save()
+            return redirect('question_details', slug=question.slug)
+    else:
+        answer_form = AnswerForm()
+
     context = {
         'question': question,
-        'answers': answers
+        'answers': answers,
+        'answer_form': answer_form
     }
 
     return render(request, 'q_details.html', context)
@@ -58,4 +71,46 @@ def add_question(request):
         question_form = QuestionRegistrationForm()
 
     return render(request, 'add_question.html', {'question_form': question_form})
+
+
+def update_question(request, slug):
+    question = get_object_or_404(Question, slug=slug)
+
+    form = QuestionUpdateForm(request.POST or None, instance=question)
+    if form.is_valid():
+        form.save()
+        return redirect('questions_list')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'update_question.html', context)
+
+
+def delete_question(request, slug):
+    question = get_object_or_404(Question, slug=slug)
+    question.delete()
+    return redirect('questions_list')
+
+
+def update_answer(request, id):
+    answer = get_object_or_404(Answer, id=id)
+
+    form = AnswerUpdateForm(request.POST or None, instance=answer)
+    if form.is_valid():
+        form.save()
+        return redirect('question_details', slug=answer.question.slug)
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'update_answer.html', context)
+
+
+def delete_answer(request, id):
+    answer = get_object_or_404(Answer, id=id)
+    answer.delete()
+    return redirect('question_details', slug=answer.question.slug)
 

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
-from questions_and_answers.questions.models import Question
+from questions_and_answers.questions.models import Question, Answer
 
 User = get_user_model()
 
@@ -34,3 +34,21 @@ class QuestionRegistrationForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = ('title', 'body')
+
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ('description',)
+
+
+class QuestionUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ('title', 'body')
+
+
+class AnswerUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ('description',)
