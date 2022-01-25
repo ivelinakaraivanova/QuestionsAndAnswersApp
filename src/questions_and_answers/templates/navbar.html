@@ -33,9 +33,9 @@
                 Profile
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Change Password</a></li>
-                <li><a class="dropdown-item" href="#">Change Account</a></li>
-                <li><a class="dropdown-item" href="#">Quiestion & Answer</a></li>
+                <li><a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a></li>
+                <li><a class="dropdown-item" href="{% url 'change_profile' %}">Change Account</a></li>
+                <li><a class="dropdown-item" href="{% url 'list_info' %}">Questions & Answers</a></li>
               </ul>
             </li>
           {% else %}
@@ -48,7 +48,7 @@
           {% endif %}
       </ul>
       <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
